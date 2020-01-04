@@ -1,14 +1,17 @@
 - name: Launch a number of instances on AWS with a particular security grouup
   hosts: staging_group
   connection: local
+
+  #define the variables below
   vars:
     region:         eu-central-1
     ssh_key:        Ansible
     count:          2
     security_group: Ansible
-    aws_access_key: AKIA4FVVGUX6XY764AVU
-    aws_secret_key: wkQpkYPs6lQ/cZEQrEZREPrtr6vt5cLDOovEiaG8
+    aws_access_key: your_aws_access_key
+    aws_secret_key: your_aws_secret_key
 
+  #define the tasks below
   tasks:
   - name: Create a security group
     ec2_group:
