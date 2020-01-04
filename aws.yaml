@@ -1,0 +1,47 @@
+- name: Launch a number of instances on AWS with a particular security grouup
+  hosts: staging_group
+  connection: local
+  vars:
+    region:         eu-central-1
+    ssh_key:        Ansible
+    count:          2
+    security_group: Ansible
+    aws_access_key: AKIA4FVVGUX6XY764AVU
+    aws_secret_key: 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
+
+  tasks:
+  - name: Create a security group
+    ec2_group:
+       name: "{{ security_group }}"
+       description: allow traffic via 22, 80, 443 ports
+       region: "{{ region }}"
+       rules:
+          - proto: tcp
+            from_port: 22
+            to_port  : 22
+            cidr_ip  : 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port  : 80
+            cidr_ip  : 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port  : 443
+            cidr_ip  : 0.0.0.0/0
+       rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+       aws_access_key: "{{ aws_access_key }}"
+       aws_secret_key: "{{ aws_secret_key }}"
+  
+  - name: Launch an instance
+    ec2:
+      instance_type:  t2.micro
+      image:          ami-0cc0a36f626a4fdf5
+      wait:           yes
+      region:         "{{ region }}"
+      group:          "{{ security_group }}"
+      count:          "{{ count }}"
+      key_name:       "{{ ssh_key }}"
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
