@@ -1,0 +1,18 @@
+- name: Configure haproxy
+  hosts: haproxy
+  become: yes
+
+  tasks:
+  - name: Haproxy installation
+    apt: name=haproxy update_cache=yes state=latest
+  - name: Start haproxy and make it on boot
+    service: name=haproxy state=started enabled=yes
+
+  - name: Test
+    shell: |
+       haproxy -v
+       service haproxy status
+    register: result
+  - name: Print the report
+    debug:
+     var: result
