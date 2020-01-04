@@ -1,0 +1,19 @@
+- name: Install Apache web server on Ubuntu
+  hosts: staging_group
+  become: yes
+  
+  tasks:
+  - name: Apache installation
+    apt: name=apache2 update_cache=yes state=latest
+
+  - name: Start webserver and make it on boot
+    service: name=apache2 state=started enabled=yes
+
+  - name: Test
+    shell: |
+       systemctl status apache2
+       netstat -ntulp
+    register: result
+  - name: Print the report
+    debug:
+     var: result
