@@ -6,7 +6,7 @@
      destin_file: /etc/ssl
 
   tasks:  
-  - name: Copy SSL in the PEM format to Haproxy
+  - name: Copy SSL in PEM format to Haproxy
     copy: srs={{ source_file }} dest={{ destin_file }}
     
   - name: Modify Haproxy conf file
