@@ -42,8 +42,7 @@
        SSLCertificateFile {{ path_to_SSL }}svagworks.crt
        SSLCertificateKeyFile {{ path_to_SSL }}svagworks.key
        SSLCertificateChainFile {{ path_to_SSL }}svagworks.ca-bundle
-       
-       
+              
        </VirtualHost>
 
   - name: Copy website to the servers
