@@ -1,0 +1,73 @@
+- name: Configure Apache Virtual Hosts for 80 and 443 ports
+  hosts: haproxy
+  become: yes
+  vars:
+     domain: svagworks.me
+     document_root: /var/www/svagworks
+     path_to_SSL: /etc/ssl/svagworks/
+
+  tasks:
+  - name: Copy the directory with the SSL files
+    copy:
+      src: /home/ssl/svagworks
+      dest: /etc/ssl
+
+  - name: Modify conf file
+    shell: |
+       mkdir /var/www/svagworks
+       a2enmod ssl
+       cat << EOF | sudo tee /etc/apache2/sites-available/000-default.conf
+
+       <VirtualHost *:80>
+
+       ServerName {{ domain  }}
+       ServerAlias www.{{ domain  }}
+       DocumentRoot {{ document_root }}
+
+       ErrorLog ${APACHE_LOG_DIR}/error.log
+       CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+       Redirect permanent / https://{{ domain  }}/
+
+       </VirtualHost>
+
+       <VirtualHost *:443>
+
+       ServerName {{ domain  }}
+       ServerAlias www.{{ domain  }}
+       DocumentRoot {{ document_root }} 
+
+       SSLEngine on
+       SSLCertificateFile {{ path_to_SSL }}svagworks.crt
+       SSLCertificateKeyFile {{ path_to_SSL }}svagworks.key
+       SSLCertificateChainFile {{ path_to_SSL }}svagworks.ca-bundle
+       
+       
+       </VirtualHost>
+
+  - name: Copy website to the servers
+    copy:
+      src: /home/index.html
+      dest: /var/www/svagworks/
+
+  - name: Test1
+    shell: |
+       apachectl -t
+    register: result1
+  - name: Print the report
+    debug:
+     var: result1
+
+  - name: Restart Apache
+    service: name=apache2 state=restarted
+    when: result1.stderr == "Syntax OK"
+
+  - name: Test2
+    shell: |
+       systemctl status apache2
+       netstat -ntulp
+       apachectl -S
+    register: result2
+  - name: Print the report
+    debug:
+     var: result2
