@@ -1,5 +1,5 @@
 - name: Configure Apache Virtual Hosts for 80 and 443 ports and upload index.html
-  hosts: haproxy
+  hosts: staging_group
   become: yes
   vars:
      domain: svagworks.me
