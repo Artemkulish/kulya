@@ -1,4 +1,4 @@
-- name: Configure Apache Virtual Hosts for 80 and 443 ports
+- name: Configure Apache Virtual Hosts for 80 and 443 ports and upload index.html
   hosts: haproxy
   become: yes
   vars:
@@ -11,11 +11,20 @@
     copy:
       src: /home/ssl/svagworks
       dest: /etc/ssl
+      
+  - name: Create the root directory
+    shell: mkdir /var/www/svagworks
+  
+  - name: Copy website to the servers
+    copy:
+      src: /home/index.html
+      dest: /var/www/svagworks/
+      
+  - name: Enable SSL module
+    shell: a2enmod ssl
 
   - name: Modify conf file
     shell: |
-       mkdir /var/www/svagworks
-       a2enmod ssl
        cat << EOF | sudo tee /etc/apache2/sites-available/000-default.conf
 
        <VirtualHost *:80>
@@ -44,11 +53,6 @@
        SSLCertificateChainFile {{ path_to_SSL }}svagworks.ca-bundle
               
        </VirtualHost>
-
-  - name: Copy website to the servers
-    copy:
-      src: /home/index.html
-      dest: /var/www/svagworks/
 
   - name: Test1
     shell: |
