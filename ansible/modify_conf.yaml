@@ -2,7 +2,7 @@
   hosts: haproxy
   become: yes
   vars:
-     source_file: /home/ssl/svagworks/2.pem
+     source_file: /home/ssl/svagworks/svagworks.pem
      destin_file: /etc/ssl
 
   tasks:  
@@ -14,7 +14,7 @@
        echo 'cat >> /etc/haproxy/haproxy.cfg <<EOL
        frontend http_https
                 bind *:80
-                bind *:443 ssl crt /etc/ssl/2.pem
+                bind *:443 ssl crt /etc/ssl/svagworks.pem
                 redirect scheme https if !{ ssl_fc }
                 default_backend nodes
                 
