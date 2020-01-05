@@ -12,7 +12,7 @@
   - name: Modify Haproxy conf file
     shell: |
        echo 'cat >> /etc/haproxy/haproxy.cfg <<EOL
-       frontend http_https
+       frontend http_https_svagworks
                 bind *:80
                 bind *:443 ssl crt /etc/ssl/svagworks.pem
                 redirect scheme https if !{ ssl_fc }
@@ -20,8 +20,10 @@
                 
        backend nodes
                balance roundrobin
-               server myweb1 172.31.47.134:80 weight 55
-               server myweb2 172.31.46.99:80  weight 45
+               option httpchk
+               cookie SERVERUSED insert indirect nocache
+               server svagworks.com1 172.31.47.134:80 cookie weight 55
+               server svagworks.com2 172.31.46.99:80  cookie weight 45
                
        EOL' | sudo -s
   - name: Restart Haproxy
