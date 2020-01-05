@@ -78,3 +78,4 @@
   - name: Print the report
     debug:
      var: result2
+
