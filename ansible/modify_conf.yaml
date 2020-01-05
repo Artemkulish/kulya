@@ -1,4 +1,4 @@
-- name: Configure LoadBalancer
+- name: Configure Haproxy LoadBalancer
   hosts: haproxy
   become: yes
   vars:
