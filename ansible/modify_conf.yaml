@@ -1,27 +1,28 @@
-- name: Upload a file
+- name: Configure LoadBalancer
   hosts: haproxy
   become: yes
+  vars:
+     source_file: /home/ssl/svagworks/2.pem
+     destin_file: /etc/ssl
+
   tasks:  
-  - name: Modify conf file
+  - name: Copy SSL in the PEM format to Haproxy
+    copy: srs={{ source_file }} dest={{ destin_file }}
+    
+  - name: Modify Haproxy conf file
     shell: |
        echo 'cat >> /etc/haproxy/haproxy.cfg <<EOL
-       frontend http_front
+       frontend http_https
                 bind *:80
-                default_backend http_back
+                bind *:443 ssl crt /etc/ssl/2.pem
+                redirect scheme https if !{ ssl_fc }
+                default_backend nodes
                 
-       frontend https_front
-                bind *:443
-                default_backend https_back
-                
-       backend http_back
+       backend nodes
                balance roundrobin
                server myweb1 172.31.47.134:80 weight 55
-              server myweb1 172.31.46.99:80  weight 45
+               server myweb2 172.31.46.99:80  weight 45
                
-       backend https_back
-               balance roundrobin
-               server myweb1 172.31.47.134:443
-               server myweb1 172.31.46.99:443
        EOL' | sudo -s
   - name: Restart Haproxy
     service: name=haproxy state=restarted
