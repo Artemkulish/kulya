@@ -1,4 +1,4 @@
-- name: Launch a number of instances on AWS with a particular security grouup
+- name: Launch a number of instances on AWS with a particular security group
   hosts: staging_group
   connection: local
 
