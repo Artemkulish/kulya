@@ -12,9 +12,12 @@
       src: /home/ssl/svagworks
       dest: /etc/ssl
       
-  - name: Create the root directory
-    shell: mkdir /var/www/svagworks
-  
+  - name: Create root directory
+    file:
+      path: mkdir /var/www/svagworks
+      state: directory
+      mode: '0755'    
+   
   - name: Copy website to the servers
     copy:
       src: /home/index.html
