@@ -26,5 +26,6 @@
                server svagworks.com2 172.31.46.99:80  cookie weight 45
                
        EOL' | sudo -s
+       
   - name: Restart Haproxy
     service: name=haproxy state=restarted
