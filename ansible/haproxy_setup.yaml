@@ -1,4 +1,4 @@
-- name: Configure haproxy
+- name: Install Haproxy
   hosts: haproxy
   become: yes
 
