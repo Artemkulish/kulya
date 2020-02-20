@@ -6,11 +6,11 @@ public class Unicode {
 		
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("Let's convert numbers to the ASCII characters!");
-		System.out.println("From: ");
+		System.out.println("Let's convert some numbers to the ASCII characters!");
+		System.out.print("From: ");
 		String number1 = input.nextLine();
 		
-		System.out.println("To: ");
+		System.out.print("To: ");
 		String number2 = input.nextLine();
 		
 		int first = Integer.parseInt(number1);
