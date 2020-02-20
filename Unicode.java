@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Unicode {
+public class Testfirst {
 
 	public static void main(String[] args) {
 		
@@ -8,15 +8,12 @@ public class Unicode {
 		
 		System.out.println("Let's convert some numbers to the ASCII characters!");
 		System.out.print("From: ");
-		String number1 = input.nextLine();
+		int number1 = input.nextInt();
 		
 		System.out.print("To: ");
-		String number2 = input.nextLine();
+		int number2 = input.nextInt();
 		
-		int first = Integer.parseInt(number1);
-		int second = Integer.parseInt(number2);
-		
-		for(int i=first; i < second; i++) {
+		for(int i=number1; i < number2; i++) {
 			System.out.printf("The ASCII" + "(%d)" + " character is: " + (char)i + ".\n", i);
 		}		
 	}
