@@ -13,7 +13,7 @@ public class Unicode {
 		System.out.print("To: ");
 		int number2 = input.nextInt();
 		
-		for(int i=number1; i < number2; i++) {
+		for (int i=number1; i < number2; i++) {
 			System.out.printf("The ASCII" + "(%d)" + " character is: " + (char)i + ".\n", i);
 		}		
 	}
