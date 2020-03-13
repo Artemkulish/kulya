@@ -1,0 +1,28 @@
+image: maven
+
+stages:
+    - build
+    - test
+    - deploy
+    
+build:
+    stage: build
+    script:
+        - echo "BUILDING"
+        - git clone https://github.com/DevOps-source/TestDemo1.git
+        - cd TestDemo1 && mvn clean package && cd target && ls
+    artifacts:
+        paths:
+            - TestDemo1/FirstDemo.war
+            
+test:
+    stage: test
+    script: 
+        - echo "TESTING"
+        - test -f "TestDemo1/FirstDemo.war"
+
+deploy:
+    stage: deploy
+    deploy:
+    script:
+        - scp /TestDemo1/FirstDemo.war artemkulish123@35.223.161.247:/tmp
