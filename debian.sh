@@ -19,3 +19,5 @@ apt upgrade
 #INSTALL NEEDED PROGRAMMS
 apt install git -y
 apt install sudo -y
+
+#ADD USER TO SUDO GROUP
