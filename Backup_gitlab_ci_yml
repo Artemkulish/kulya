@@ -1,0 +1,124 @@
+image: gitlab.svagworks.me:5050/root/demo_2
+
+#variables:
+#    PATH_TO_JAR:    /target/*.jar
+#    IP_BILLING:     10.166.0.56
+#    IP_CUSTOMERS:   10.166.0.57
+#    IP_GATEWAY:     10.166.0.58
+#    IP_DISCOVERY:   10.166.0.59
+
+stages:
+    - build
+    
+build:
+    stage: build
+    script:
+        - mkdir liquibase && cd liquibase
+        - wget https://github.com/liquibase/liquibase/releases/download/v3.8.8/liquibase-3.8.8.tar.gz
+        - tar -xvf liquibase-3.8.8.tar.gz
+        - echo "export PATH=/builds/root/Demo_2/liquibase:$PATH" >> ~/.bashrc
+        - echo "USER=$UN" >> /etc/environment
+        - echo "PA=$PASS" >> /etc/environment
+        - cat /etc/environment
+        - source ~/.bashrc && source /etc/environment
+        - cd ../BE/BillingService
+        - mvn liquibase:update
+        #- mvn liquibase:rollback -Dliquibase.rollbackCount=1
+    
+#    - deploy
+    
+#before_script:
+#    - 'which ssh-agent || ( apt update -y && apt install openssh-client -y)'
+#    - eval $(ssh-agent -s)
+#    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+#    - mkdir -p ~/.ssh
+#    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+#
+#    
+#
+#.build_template: &build_template
+#    stage: build
+#    script:
+#        - cd $PATH_TO_APP
+#        - mvn clean package
+#    artifacts:
+#        paths:
+#        - $PATH_TO_APP$PATH_TO_JAR
+#        expire_in: 1 day
+    
+#build_billing:
+#    <<: *build_template
+#    variables:
+#        PATH_TO_APP: BE/BillingService
+#    only:
+#        changes:
+#            - BE/BillingService/**/*
+#        
+#build_customers:
+#    <<: *build_template
+#    variables:
+#        PATH_TO_APP: BE/CustomerService/customers
+#    only:
+#        changes:
+#            - BE/CustomerService/**/*
+#        
+#build_gateway:
+#    <<: *build_template
+#    variables:
+#       PATH_TO_APP: BE/Gateway
+#    only:
+#        changes:
+#           - BE/Gateway/**/*
+
+#build_discovery:
+#    <<: *build_template
+#    variables:
+#        PATH_TO_APP: BE/ServiceDiscovery        
+#    only:
+#        changes:
+#            - BE/ServiceDiscovery/**/*
+
+
+
+#.deploy_template: &deploy_template
+#    stage: deploy
+#    script:
+#      - scp deploy.sh $PATH_TO_APP$PATH_TO_JAR $USERNAME@$IP:/tmp
+#      - ssh $USERNAME@$IP "sudo mv /tmp/*.jar /var/ && sudo mv /tmp/deploy.sh /var/ && sudo bash /var/deploy.sh "
+        
+#deploy_billing:
+#    <<: *deploy_template
+#    variables:
+#        PATH_TO_APP: BE/BillingService 
+#        IP: $IP_BILLING 
+#    only:
+#        changes:
+#            - BE/BillingService/**/*
+            
+#deploy_customers:
+#    <<: *deploy_template
+#    variables:
+#        PATH_TO_APP: BE/CustomerService/customers 
+#        IP: $IP_CUSTOMERS
+#    only:
+#        changes:
+#            - BE/CustomerService/**/*            
+
+#deploy_gateway:
+#    <<: *deploy_template
+#    variables:
+#        PATH_TO_APP: BE/Gateway  
+#        IP: $IP_GATEWAY
+#    only:
+#        changes:
+#            - BE/Gateway/**/*
+                 
+#deploy_discovery:
+#    <<: *deploy_template
+#    variables:
+#        PATH_TO_APP: BE/ServiceDiscovery   
+#        IP: $IP_DISCOVERY
+#    only:
+#        changes:
+#            - BE/ServiceDiscovery/**/*           
+            
