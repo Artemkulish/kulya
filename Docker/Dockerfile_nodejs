@@ -1,0 +1,8 @@
+FROM alpine:3.10
+LABEL maintainer="artemkulish123@gmail.com"
+ENV app=index.js
+WORKDIR /usr/app
+RUN apk add nodejs
+COPY $app ./
+ENTRYPOINT ["node"]
+CMD ["index.js"]
