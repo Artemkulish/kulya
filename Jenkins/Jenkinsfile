@@ -1,18 +1,21 @@
-node() {
-    stage("Checkout") {
-        deleteDir()
-        git "https://github.com/maltez/test.git"
+pipeline {
+    agent {
+        docker { image 'maven:3-alpine' }
     }
     
-    stage("Build") {
-        sh "echo Building ${BUILD_ID}"   
-    }
-    
-    stage("Test") {
-        sh "echo Something testing on ${NODE_NAME}"    
-    }
-    
-    stage("Delivery") {
-        sh "echo Pulling on registry...."   
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master',
+                url: 'https://github.com/Artemkulish/kulya.git'
+
+                sh "ls -lat"
+            }
+        }   
+        stage('Test') {
+            steps {
+                sh 'mvn --version'   
+            }
+        }
     }
 }
