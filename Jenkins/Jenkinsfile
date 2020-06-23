@@ -1,21 +1,42 @@
 pipeline {
-    agent {
-        docker { image 'maven:3-alpine' }
-    }
+    
+    agent any
     
     stages {
-        stage('Checkout') {
+        stage('Pre-build') {
             steps {
                 git branch: 'master',
-                url: 'https://github.com/Artemkulish/kulya.git'
-
-                sh "ls -lat"
+                url: 'https://github.com/DevOps-DP-185/Identity.git'
+                sh 'sudo mvn -f ./identity-starter/pom.xml clean install'
             }
         }   
         stage('Test') {
-            steps {
-                sh 'mvn --version'   
+            steps{
+                sh 'mvn --version'
+                sh 'docker --version'
             }
         }
-    }
+        stage('Build') {
+            steps{
+                git branch: 'master',
+                url: 'https://github.com/DevOps-DP-185/Gateway.git'
+                sh 'sudo mvn clean package'
+            }
+        }      
+        stage('Package') {
+            steps{
+                sh 'sudo docker build -t artemkulish/zone3000:gateway .'
+            }
+        }   
+        stage('Deliver') {
+            steps {
+               sh 'sudo docker push artemkulish/zone3000:gateway'
+            }   
+        } 
+        stage('Cleanup') {
+            steps {
+               sh 'sudo docker image prune -a -f | grep Total'
+            }   
+        } 
+    }    
 }
