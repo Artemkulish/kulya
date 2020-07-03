@@ -5,6 +5,7 @@ const https = require('https');
 const HTTP = process.env.HTTP;
 const HTTPS = process.env.HTTPS;
 const HOST = process.env.HOST;
+const DOMAIN = process.env.DOMAIN;
 
 const httpsOptions = {
    cert: fs.readFileSync('/etc/ssl/nodejs.crt'),
@@ -18,8 +19,8 @@ const httpServer = http.createServer((req, res) => {
         return;
     }
 
-    res.statusCode = 200;
-    res.write(`Welcome to the following URL: ${req.url}`);
+    res.statusCode = 301;
+    res.setHeader('Location', `https://${DOMAIN}${req.url}`);
     res.end();
 });
 
@@ -41,4 +42,3 @@ httpServer.listen(HTTP, HOST, () => {
 httpsServer.listen(HTTPS, HOST, () => {
     console.log(`Server listen on ${HOST}:${HTTPS}`);
 });
-
