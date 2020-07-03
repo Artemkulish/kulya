@@ -8,8 +8,8 @@ ENV HTTP=80 \
 
 WORKDIR /app
 
-COPY package.json \
-     app.js \
+COPY ./src/package.json \
+     ./src/app.js \
      ./
 COPY ./ssl/nodejs.crt \
      ./ssl/nodejs.ca-bundle \
