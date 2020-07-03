@@ -8,8 +8,13 @@ ENV HTTP=80 \
 
 WORKDIR /app
 
-COPY package.json app.js ./
-COPY nodejs.crt nodejs.ca-bundle nodejs.key /etc/ssl/
+COPY package.json \
+     app.js \
+     ./
+COPY ./ssl/nodejs.crt \
+     ./ssl/nodejs.ca-bundle \
+     ./ssl/nodejs.key \
+     /etc/ssl/
 RUN npm i --no-cache
 
 ENTRYPOINT ["npm", "run"]
