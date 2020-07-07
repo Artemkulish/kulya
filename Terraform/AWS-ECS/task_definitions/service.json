@@ -1,0 +1,15 @@
+[
+    {
+      "name": "nodejs_application",
+      "image": "${docker_image}",
+      "cpu": ${cpu},
+      "memory": ${memory},
+      "networkMode": "awsvpc",
+      "portMappings": [
+        {
+          "containerPort": ${https},
+          "hostPort": ${https}
+        }
+      ]
+    }
+  ]
