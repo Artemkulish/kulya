@@ -82,7 +82,7 @@ resource "aws_security_group" "load_balancer" {
   vpc_id      = aws_vpc.kulya.id
 
   ingress {
-    from_port   = var.https
+    from_port   = var.http
     to_port     = var.http
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
