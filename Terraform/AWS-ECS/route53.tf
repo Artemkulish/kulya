@@ -3,7 +3,7 @@ resource "aws_route53_zone" "kulya" {
 }
 
 resource "aws_route53_record" "nodejs" {
-  zone_id   = "${aws_route53_zone.kulya.zone_id}"
+  zone_id   = aws_route53_zone.kulya.zone_id
   name      = "nodejs.${data.aws_route53_zone.kulya.name}"
   type      = "A"
   alias {
