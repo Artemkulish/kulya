@@ -7,7 +7,6 @@ ENV HTTP=80 \
     DOMAIN=nodejs.svagworks.me
 
 WORKDIR /app
-
 COPY ./src/ ./
 COPY ./ssl/ /etc/ssl/
 RUN npm i --no-cache
