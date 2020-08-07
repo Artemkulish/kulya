@@ -3,16 +3,32 @@
   apt: 
     name=nginx 
     state=latest
-  notify:
-    - nginx systemd
 
 - name: Copy conf file
-  template:
+  copy:
     src=templates/sslsecure.conf
     dest=/etc/nginx/sites-enabled/sslsecure.conf
 
-- name: Copy SSL files
+- name: Copy index html file
   template:
-    src=templates/sslsecure
-    dest=/etc/ssl/sslsecure
+    src=templates/index.html
+    dest=/var/www/sslsecure/
 
+- name: Copy auth file
+  copy:
+    src=templates/.htpasswd
+    dest=/etc/nginx/.htpasswd
+
+- name: test
+  copy:
+    src=templates/index.html
+    dest=/var/www/some/new/folder/
+
+- name: Copy SSL files
+  copy:
+    src=templates/{{item}}
+    dest=/etc/ssl/sslsecure/
+  with_items:
+    ['sslsecure.key', 'sslsecure.crt']
+  notify:
+    - nginx systemd
