@@ -1,3 +1,18 @@
 ---
 - name: Install Nginx 
-  apt: name=nginx state=latest
+  apt: 
+    name=nginx 
+    state=latest
+  notify:
+    - nginx systemd
+
+- name: Copy conf file
+  template:
+    src=templates/sslsecure.conf
+    dest=/etc/nginx/sites-enabled/sslsecure.conf
+
+- name: Copy SSL files
+  template:
+    src=templates/sslsecure
+    dest=/etc/ssl/sslsecure
+
