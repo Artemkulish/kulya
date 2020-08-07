@@ -1,0 +1,8 @@
+---
+- name: Test
+  hosts: gcp
+  become: yes
+
+  roles:
+    - nginx
+    - certboot

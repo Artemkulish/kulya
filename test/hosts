@@ -1,0 +1,5 @@
+[web]
+nginx ansible_host=192.168.100.12 ansible_user=artem ansible_ssh_private_key_file=/home/artem/.ssh/id_rsa.pub
+
+[gcp]
+nginx ansible_host=35.224.39.157 ansible_user=artemkulish123 ansible_ssh_private_key_file=/home/artem/.ssh/id_rsa.pub
