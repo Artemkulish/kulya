@@ -6,13 +6,15 @@
     jump: ACCEPT
   become: yes
 
-- name: Open ports
+  - name: Open ports
   iptables:
     chain: INPUT
     protocol: tcp
-    destination_port: {{ item }}
+    destination_port: "{{item}}"
     jump: ACCEPT
-    with_items:  "{{ allowed_ports}}"
+  with_items:
+    "{{allowed_ports}}"
+
 
 - name: Allow ICMP packets
   iptables:
