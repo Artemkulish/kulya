@@ -42,3 +42,4 @@
   shell: |
     iptables-save > {{ iptable_rules }}
     cat /etc/network/interfaces | grep "pre-up iptables-restore" || echo "pre-up iptables-restore < {{ iptable_rules }}" >> /etc/network/interfaces
+test
