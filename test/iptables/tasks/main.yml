@@ -1,7 +1,44 @@
 ---
-- name: Configure FW rules for VM
+- name: Allow RELATED and ESTABLISHED packets
   iptables:
     chain: INPUT
     ctstate: ESTABLISHED,RELATED
     jump: ACCEPT
   become: yes
+
+- name: Open 22 port
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 22
+    jump: ACCEPT
+
+- name: Open 80 port
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 80
+    jump: ACCEPT
+
+- name: Open 443 port
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 443
+    jump: ACCEPT
+
+- name: Allow ICMP packets
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    jump: ACCEPT
+
+- name: Restrict INCOMING traffic
+  iptables:
+    chain: INPUT
+    policy: DROP
+
+- name: Save iptable rules and make them on boot
+  shell: |
+    iptables-save > {{ iptable_rules }}
+    cat /etc/network/interfaces | grep "pre-up iptables-restore" || echo "pre-up iptables-restore < {{ iptable_rules }}" >> /etc/network/interfaces
