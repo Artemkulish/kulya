@@ -6,29 +6,24 @@
 
 - name: Copy conf file
   copy:
-    src=templates/sslsecure.conf
-    dest=/etc/nginx/sites-enabled/sslsecure.conf
+    src=templates/{{ domain }}.conf
+    dest=/etc/nginx/sites-enabled/{{ domain }}.conf
 
 - name: Copy index html file
-  template:
+  copy:
     src=templates/index.html
-    dest=/var/www/sslsecure/
+    dest=/var/www/{{ domain }}/
 
 - name: Copy auth file
   copy:
     src=templates/.htpasswd
     dest=/etc/nginx/.htpasswd
 
-- name: test
-  copy:
-    src=templates/index.html
-    dest=/var/www/some/new/folder/
-
 - name: Copy SSL files
   copy:
     src=templates/{{item}}
-    dest=/etc/ssl/sslsecure/
+    dest=/etc/ssl/{{ domain }}/
   with_items:
-    ['sslsecure.key', 'sslsecure.crt']
+    ['{{ domain }}.key', '{{ domain }}.crt']
   notify:
     - nginx systemd

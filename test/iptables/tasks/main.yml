@@ -1,0 +1,7 @@
+---
+- name: Configure FW rules for VM
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: yes
