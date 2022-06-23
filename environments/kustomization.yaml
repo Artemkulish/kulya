@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30s
-  path: ./environments
+  path: ./apps
   prune: false
   postBuild:
     substituteFrom:
