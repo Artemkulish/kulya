@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: test-1
+    namespace: flux-system
+stringData:
+    FIRST_SECRET: ENC[AES256_GCM,data:DXGT,iv:WWdV13BIfmobIVae3kb4ChQWnzcYqMzs5vS2cljjyFk=,tag:rUCl1ER3Ksw3/0xPIPFctA==,type:int]
+    SECOND_SECRET: ENC[AES256_GCM,data:JhTC,iv:cWgwdgsUDXA5oevnd9V3bplMmWdbTUL0/QBM0RNKdek=,tag:auJvbEu17ECwp9dqmyH7ng==,type:int]
+sops:
+    kms: []
+    gcp_kms:
+        - resource_id: projects/tfstates-7c3f/locations/europe-west1/keyRings/sops/cryptoKeys/non-prod
+          created_at: "2022-06-23T16:02:33Z"
+          enc: CiUA8nmFxYRqPBxEVsyg1uJO8Dog4z8RwhSQvjL245p4ohh1Y4axEkkAWowbSUvojQcVsOIdI+TL0mK2slYwmXlGfKdNRbtNh4gNXeRHnW9AXws4Prvuj8mfSyrzjo8IkzhjZUriqDM9L2mHf9Tzvdfz
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2022-06-23T16:02:33Z"
+    mac: ENC[AES256_GCM,data:g5aoB99tFECb0gqpK6ECcNOITwb6NJDGwBE0BLIATS1L/y+bXvXn2Rm3NkKp/euo5OmLFhhKR0tNRpcCT9eOfGCqIj0bHxjgEu9JHh3pPbQpeDP3GA0FxFqOhZWUDO6LeZlZ7EqvM/5m3hI1agyZhFhydJWkBgcLAw8YHiBOb6c=,iv:H7dkUtij1IszZ7yzKTXimTYjU6XE8+vbMpj17peajlY=,tag:SuzGsWxwktFUBOeMwF5GXA==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.2

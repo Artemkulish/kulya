@@ -1,0 +1,19 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: artyom-test-2
+  namespace: flux-system
+spec:
+  interval: 30s
+  path: ./environments
+  prune: false
+  postBuild:
+    substituteFrom:
+    - kind: Secret
+      name: test-1
+    - kind: Secret
+      name: test-2
+  sourceRef:
+    kind: GitRepository
+    name: artyom-test
+    namespace: flux-system
