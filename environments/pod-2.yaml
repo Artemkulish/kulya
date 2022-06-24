@@ -12,3 +12,9 @@ spec:
     envFrom:
     - secretRef:
         name: test-secret
+    env:
+      - name: SECOND_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: test-secret2
+            key: SECOND_SECRET
