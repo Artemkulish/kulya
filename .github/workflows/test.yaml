@@ -1,0 +1,13 @@
+name: Test Json
+
+on: push
+
+env:
+  JSON: ${{ toJSON('first,second') }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo ${{ env.JSON }}
