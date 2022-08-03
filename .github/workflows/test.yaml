@@ -22,6 +22,8 @@ jobs:
           done
 
           matrix=$start$result$end
+
+          echo $matrix
           echo "::set-output name=matrix::$matrix"
     outputs:
       matrix: ${{ steps.set_matrix.outputs.matrix }}
