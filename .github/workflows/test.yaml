@@ -21,7 +21,7 @@ jobs:
             result+="\"${app}\","
           done
 
-          matrix="$start$result$end"
+          matrix="$start_array$result$end_array"
 
           echo $matrix
           echo "::set-output name=matrix::$matrix"
