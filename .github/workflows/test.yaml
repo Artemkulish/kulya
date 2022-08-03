@@ -9,7 +9,7 @@ jobs:
   test:
     strategy:
       matrix:
-        version: ['1', '2', '3',]
+        version: ['1', '2', '3']
     runs-on: ubuntu-latest
     steps:
       - name: test
