@@ -3,7 +3,7 @@ name: Test Json
 on: push
 
 env:
-  apps: 'agent server'
+  apps: 'agent'
 
 jobs:
   prepare:
