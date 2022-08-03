@@ -18,7 +18,7 @@ jobs:
 
           for app in ${apps[@]}
           do
-            result+="\"${app}\","
+            result+="\"${app}\", "
           done
 
           matrix="$start_array$(echo $result | sed 's/.$//')$end_array"

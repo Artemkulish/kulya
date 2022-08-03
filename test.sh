@@ -7,7 +7,7 @@ result=""
 
 for word in ${test[@]}
 do
-  result+="\"${word}\","
+  result+="\"${word}\", "
 done
 
 final_result="$start$(echo $result | sed 's/.$//')$end"
