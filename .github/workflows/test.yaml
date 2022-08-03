@@ -2,11 +2,30 @@ name: Test Json
 
 on: push
 
+env:
+  apps: '["agent", "server"]'
+
 jobs:
+  # prepare:
+  #   runs-on: ubuntu-latest
+  #   run: |
+  #     apps=(${{ env.apps }})
+  #     start_array="["
+  #     end_array="]"
+  #     result=""
+
+  #     for app in ${apps[@]}
+  #     do
+  #       result+="'${app}',"
+  #     done
+
+  #     matrix=$start$result$end
+  #     echo $final_result
+
   test:
     strategy:
       matrix:
-        version: ['1', '2', '3',]
+        version: ${{ env.apps }}
     runs-on: ubuntu-latest
     steps:
       - name: test
