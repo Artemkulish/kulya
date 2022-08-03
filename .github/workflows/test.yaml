@@ -21,7 +21,7 @@ jobs:
             result+="\"${app}\","
           done
 
-          matrix="$start_array$result$end_array"
+          matrix="$start$(echo $result | sed 's/.$//')$end"
 
           echo $matrix
           echo "::set-output name=matrix::$matrix"
@@ -32,8 +32,7 @@ jobs:
   test:
     strategy:
       matrix:
-        version: ${{fromJson('["agent","server"]')}}
-        #version: ${{fromJson(needs.prepare.outputs.matrix)}}
+        version: ${{fromJson(needs.prepare.outputs.matrix)}}
     runs-on: ubuntu-latest
     needs: prepare
     steps:
