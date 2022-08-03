@@ -18,7 +18,7 @@ jobs:
 
           for app in ${apps[@]}
           do
-            result+="\"${word}\","
+            result+="\"${app}\","
           done
 
           matrix=$start$result$end
