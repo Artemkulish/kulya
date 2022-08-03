@@ -21,7 +21,7 @@ jobs:
             result+="\"${app}\","
           done
 
-          matrix="$start$(echo $result | sed 's/.$//')$end"
+          matrix="$start_array$(echo $result | sed 's/.$//')$end_array"
 
           echo $matrix
           echo "::set-output name=matrix::$matrix"
