@@ -11,30 +11,4 @@ jobs:
     steps:
       - id: set_matrix
         run: |
-          apps=(${{ env.apps }})
-          start_array="["
-          end_array="]"
-          result=""
-
-          for app in ${apps[@]}
-          do
-            result+="\"${app}\", "
-          done
-
-          matrix="$start_array$(echo $result | sed 's/.$//')$end_array"
-
-          echo $matrix
-          echo "::set-output name=matrix::$matrix"
-    outputs:
-      matrix: ${{ steps.set_matrix.outputs.matrix }}
-      
-
-  test:
-    strategy:
-      matrix:
-        version: ${{fromJson(needs.prepare.outputs.matrix)}}
-    runs-on: ubuntu-latest
-    needs: prepare
-    steps:
-      - name: test
-        run: echo ${{ matrix.version }}
+          echo ${{ job }}
