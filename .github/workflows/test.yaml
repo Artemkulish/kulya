@@ -10,5 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: set_matrix
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
-          echo ${{ job }}
+          echo "$GITHUB_CONTEXT"
