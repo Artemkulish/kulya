@@ -1,0 +1,18 @@
+name: "Test"
+
+on:
+  workflow_dispatch:
+    inputs:
+      sandbox:
+        type: string
+        description: "Name of sandbox"
+        required: true
+
+jobs:
+  prepare:
+    runs-on: "ubuntu-latest"
+    steps:
+      name: Test
+      run: |
+        echo "Without quotes: ${{ inputs.sandbox }}"
+        echo "With quotes: '${{ inputs.sandbox }}'"
